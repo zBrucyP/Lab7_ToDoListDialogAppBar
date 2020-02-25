@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ToDoList</string>
+    <string name="note_title_hint">Enter a title for your note.</string>
 </resources>
