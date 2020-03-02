@@ -51,7 +51,7 @@ public class ToDoListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(getActivity(), mNote.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), mNote.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
         }
     }
 
