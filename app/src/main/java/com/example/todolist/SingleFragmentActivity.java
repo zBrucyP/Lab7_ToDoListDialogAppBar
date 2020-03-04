@@ -17,14 +17,23 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
 
         // fragment setup
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
+        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
         if (fragment == null) {
-            fragment = new NoteFragment();
+            fragment = createFragment();
             fm.beginTransaction()
-                    .add(R.id.fragmentContainer, fragment)
+                    .add(R.id.fragment_container, fragment)
                     .commit();
         }
+
+        /*
+                if (fragment == null) {
+            fragment = new NoteFragment();
+            fm.beginTransaction()
+                    .add(R.id.fragment_container, fragment)
+                    .commit();
+        }
+         */
     }
 
 }

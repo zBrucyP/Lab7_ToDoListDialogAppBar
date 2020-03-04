@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -46,12 +48,25 @@ public class ToDoListFragment extends Fragment {
         }
 
         public void bind(Note note) {
-            //TODO: probably needs filled out
+            // set note title in layout
+            TextView noteTitleTextView = itemView.findViewById(R.id.note_title_textView);
+            noteTitleTextView.setText(note.getTitle());
+
+            // set note date in layout
+            TextView noteDateTextView = itemView.findViewById(R.id.note_date_textView);
+            noteDateTextView.setText(note.getDate().toString());
+
+            // set note done checkbox in layout
+            CheckBox noteDoneCheckBox = itemView.findViewById(R.id.note_done_checkBox);
+            noteDoneCheckBox.setChecked(note.isDone());
         }
 
         @Override
         public void onClick(View v) {
-            //Toast.makeText(getActivity(), mNote.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
+            TextView noteTitleTextView = (TextView) v.findViewById(R.id.note_title_textView);
+            String note_title = noteTitleTextView.getText().toString();
+
+            Toast.makeText(getActivity(), note_title + " clicked!", Toast.LENGTH_SHORT).show();
         }
     }
 
