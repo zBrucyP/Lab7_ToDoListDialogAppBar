@@ -1,5 +1,6 @@
 package com.example.todolist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,9 @@ public class ToDoListFragment extends Fragment {
 
 
     private class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private Note mNote;
+
         public NoteHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_note, parent, false));
 
@@ -48,6 +52,9 @@ public class ToDoListFragment extends Fragment {
         }
 
         public void bind(Note note) {
+
+            mNote = note;
+
             // set note title in layout
             TextView noteTitleTextView = itemView.findViewById(R.id.note_title_textView);
             noteTitleTextView.setText(note.getTitle());
@@ -63,10 +70,8 @@ public class ToDoListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            TextView noteTitleTextView = (TextView) v.findViewById(R.id.note_title_textView);
-            String note_title = noteTitleTextView.getText().toString();
-
-            Toast.makeText(getActivity(), note_title + " clicked!", Toast.LENGTH_SHORT).show();
+            Intent intent = NoteActivity.newIntent(getActivity(), mNote.getId());
+            startActivity(intent);
         }
     }
 

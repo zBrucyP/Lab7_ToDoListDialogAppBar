@@ -12,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 
+import java.util.UUID;
+
 
 public class NoteFragment extends Fragment {
 
@@ -23,7 +25,9 @@ public class NoteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mNote = new Note();
+        UUID noteId = (UUID) getActivity().getIntent()
+                .getSerializableExtra(NoteActivity.EXTRA_NOTE_ID);
+        mNote = NoteBook.get(getActivity()).getNote(noteId);
     }
 
     @Override
@@ -34,6 +38,7 @@ public class NoteFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_note, container, false);
 
         mTitleField = (EditText) v.findViewById(R.id.note_title);
+        mTitleField.setText(mNote.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -56,6 +61,7 @@ public class NoteFragment extends Fragment {
         mDateButton.setEnabled(false);
 
         mDoneCheckBox = (CheckBox) v.findViewById(R.id.job_done);
+        mDoneCheckBox.setChecked(mNote.isDone());
         mDoneCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
