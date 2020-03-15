@@ -21,13 +21,22 @@ public class NoteFragment extends Fragment {
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mDoneCheckBox;
+    private static final String ARG_NOTE_ID = "crime_id";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID noteId = (UUID) getActivity().getIntent()
-                .getSerializableExtra(NoteActivity.EXTRA_NOTE_ID);
+        UUID noteId = (UUID) getArguments().getSerializable(ARG_NOTE_ID);
         mNote = NoteBook.get(getActivity()).getNote(noteId);
+    }
+
+    public static NoteFragment newInstance(UUID noteId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_NOTE_ID, noteId);
+
+        NoteFragment fragment = new NoteFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override

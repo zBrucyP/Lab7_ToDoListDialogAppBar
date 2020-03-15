@@ -32,12 +32,23 @@ public class ToDoListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     public void updateUI() {
         NoteBook noteBook = NoteBook.get(getActivity());
         List<Note> notes = noteBook.getNotes();
 
-        mAdapter = new NoteAdapter(notes);
-        mRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new NoteAdapter(notes);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
+
     }
 
 

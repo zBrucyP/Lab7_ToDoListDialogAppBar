@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class NoteActivity extends SingleFragmentActivity {
 
-    public static final String EXTRA_NOTE_ID = "com.example.todolist.todolistfragment";
+    private static final String EXTRA_NOTE_ID = "com.example.todolist.todolistfragment";
 
     public static Intent newIntent(Context packageContext, UUID noteId) {
         Intent intent = new Intent(packageContext, NoteActivity.class);
@@ -22,7 +22,9 @@ public class NoteActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new NoteFragment();
+        UUID noteId = (UUID) getIntent()
+                .getSerializableExtra(EXTRA_NOTE_ID);
+        return NoteFragment.newInstance(noteId);
     }
 
 
