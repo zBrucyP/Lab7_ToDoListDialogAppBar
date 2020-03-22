@@ -23,6 +23,7 @@ public class NoteBook {
         mAppContext = context;
         mNotes = new ArrayList<Note>();
 
+        /*
         // populate with test data
         for (int i = 0; i < 100; i++) {
             Note note = new Note();
@@ -30,6 +31,7 @@ public class NoteBook {
             note.setDone(i % 2 == 0);
             mNotes.add(note);
         }
+         */
     }
 
     public List<Note> getNotes() {
@@ -43,6 +45,10 @@ public class NoteBook {
             }
         }
         return null;
+    }
+
+    public void addNote(Note n) {
+        mNotes.add(n);
     }
 
 }
