@@ -2,4 +2,5 @@
     <string name="app_name">ToDoList</string>
     <string name="note_title_hint">Enter a title for your note.</string>
     <string name="note_done_label">Done</string>
+    <string name="date_picker_title">Date of Note</string>
 </resources>

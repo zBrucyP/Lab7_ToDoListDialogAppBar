@@ -1,5 +1,7 @@
 package com.example.todolist;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,7 +13,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -22,6 +26,8 @@ public class NoteFragment extends Fragment {
     private Button mDateButton;
     private CheckBox mDoneCheckBox;
     private static final String ARG_NOTE_ID = "crime_id";
+    private static final String DIALOG_DATE = "DialogDate";
+    private static final int REQUEST_DATE = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,10 +71,21 @@ public class NoteFragment extends Fragment {
             }
         });
 
-        mDateButton = (Button) v.findViewById((R.id.note_date));
-        mDateButton.setText(mNote.getDate().toString());
-        mDateButton.setEnabled(false);
 
+        // manage the date element
+        mDateButton = (Button) v.findViewById((R.id.note_date));
+        updateDate();
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mNote.getDate());
+                dialog.setTargetFragment(NoteFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
+
+        // manage the done checkbox element
         mDoneCheckBox = (CheckBox) v.findViewById(R.id.job_done);
         mDoneCheckBox.setChecked(mNote.isDone());
         mDoneCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -79,6 +96,23 @@ public class NoteFragment extends Fragment {
         });
 
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mNote.setDate(date);
+            updateDate();
+        }
+    }
+
+    private void updateDate() {
+        mDateButton.setText(mNote.getDate().toString());
     }
 
 }
